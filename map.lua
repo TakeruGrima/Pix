@@ -1,3 +1,5 @@
+TILESIZE = 32
+
 map = {}
 
 map[1]  = "0000000000000000000000000"
@@ -20,8 +22,9 @@ map[17] = "0000000010000001000000000"
 map[18] = "1111111111111111111111111"
 
 function getTileAt(pX, pY)
-  local col = math.floor(pX / 32) + 1
-  local lig = math.floor(pY / 32) + 1
+  local col = math.floor(pX / TILESIZE) +1
+  local lig = math.floor(pY / TILESIZE) +1
+  
   if col>0 and col<=#map[1] and lig>0 and lig<=#map then
     local id = string.sub(map[lig],col,col)
     return id
@@ -41,7 +44,7 @@ function Mapdraw()
       local char = string.sub(map[l],c,c)
       if tonumber(char) > 0 then
         for pixel=0,15 do
-          love.graphics.rectangle("fill",(c-1)*32 + pixel*2,(l-1)*32,2,2)
+          love.graphics.rectangle("fill",(c-1)*TILESIZE + pixel*2,(l-1)*TILESIZE,2,2)
         end
       end
     end

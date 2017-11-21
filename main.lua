@@ -6,11 +6,8 @@ require("Player")
 io.stdout:setvbuf('no')
 --if arg[#arg] == "-debug" then require("mobdebug").start() end
 
--- Images loading
-local imgTiles = {}
-imgTiles["1"] = love.graphics.newImage("tile1.png")
-imgPlayer = love.graphics.newImage("alien.png")
-
+love.graphics.setDefaultFilter("nearest")
+love.graphics.scale(2,2)
 -- Map and levels
 local level = {}
 local pixela = require("Player")

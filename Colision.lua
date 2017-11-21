@@ -1,26 +1,29 @@
 require("map")
 
 function CollideRight(pSprite)
-  local idTete1 = getTileAt(pSprite.x + 32, pSprite.y + 3)
-  local idTete2 = getTileAt(pSprite.x + 32, pSprite.y + 30)
-  local id1 = getTileAt(pSprite.x + 32, pSprite.y +14+30)
-  return isSolid(id1) or isSolid(idTete1) or isSolid(idTete2)
+  local id1 = getTileAt(pSprite.x + TILESIZE, pSprite.y + 3)
+  local id2 = getTileAt(pSprite.x + TILESIZE, pSprite.y + TILESIZE - 2)
+  if isSolid(id1) or isSolid(id2) then return true end
+  return false
 end
 
 function CollideLeft(pSprite)
   local id1 = getTileAt(pSprite.x-1, pSprite.y + 3)
-  local id2 = getTileAt(pSprite.x-1, pSprite.y + 30)
-  return isSolid(id1) or isSolid(id2)
+  local id2 = getTileAt(pSprite.x-1, pSprite.y + TILESIZE - 2)
+  if isSolid(id1) or isSolid(id2) then return true end
+  return false
 end
 
 function CollideBelow(pSprite)
-  local id1 = getTileAt(pSprite.x + 1, pSprite.y + 32+16)
-  local id2 = getTileAt(pSprite.x + 30, pSprite.y + 32+16)
-  return isSolid(id1) or isSolid(id2)
+  local id1 = getTileAt(pSprite.x + 1, pSprite.y + TILESIZE +16)
+  local id2 = getTileAt(pSprite.x + TILESIZE - 2, pSprite.y + TILESIZE +16)
+  if isSolid(id1) or isSolid(id2) then return true end
+  return false
 end
 
 function CollideAbove(pSprite)
   local id1 = getTileAt(pSprite.x + 1, pSprite.y-1)
-  local id2 = getTileAt(pSprite.x + 30, pSprite.y-1)
-  return isSolid(id1) or isSolid(id2) 
+  local id2 = getTileAt(pSprite.x + TILESIZE - 2, pSprite.y-1)
+  if isSolid(id1) or isSolid(id2) then return true end
+  return false
 end

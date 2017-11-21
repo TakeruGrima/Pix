@@ -1,14 +1,17 @@
+require("map")
 lstSprites = {}
 
 -- Globals
 local bJumpReady
 flip = false
 
-function CreateSprite(pType, pX, pY)
+function CreateSprite(pType, pX, pY,width,height)
   mySprite = {}
 
   mySprite.x = pX
   mySprite.y = pY
+  mySprite.w = width
+  mySprite.h = height
   mySprite.vx = 0
   mySprite.vy = 0
   mySprite.type = pType
@@ -70,8 +73,8 @@ function updateSprite(pSprite, dt)
   -- Stop!
   if collide then
     pSprite.vx = 0
-    local col = math.floor((pSprite.x + 16) / 32) + 1
-    pSprite.x = (col-1)*32
+    local col = math.floor((pSprite.x + TILESIZE/2) / TILESIZE) + 1
+    pSprite.x = (col-1)*TILESIZE
   end
   collide = false
   -- Above
@@ -79,8 +82,8 @@ function updateSprite(pSprite, dt)
     collide = CollideAbove(pSprite)
     if collide then
       pSprite.vy = 0
-      local lig = math.floor((pSprite.y + 16) / 32) + 1
-      pSprite.y = (lig-1)*32
+      local lig = math.floor((pSprite.y + TILESIZE/2) / TILESIZE) + 1
+      pSprite.y = (lig-1)*TILESIZE
     end
   end
   collide = false
@@ -90,8 +93,8 @@ function updateSprite(pSprite, dt)
     if collide then
       pSprite.standing = true
       pSprite.vy = 0
-      local lig = math.floor((pSprite.y + 16) / 32) + 1
-      pSprite.y = (lig-1)*32 -16
+      local lig = math.floor((pSprite.y + TILESIZE/2) / TILESIZE) + 1
+      pSprite.y = (lig-1)*TILESIZE -16
     else
       pSprite.standing = false
     end
@@ -110,20 +113,20 @@ function drawSprite(pSprite)
     if pSprite.flip == false then
       for i=1,#currentanim[n] do
         if currentanim[n][i] == 1 then
-          love.graphics.rectangle("fill",pSprite.x+ i*2,pSprite.y+ n*2,2,2) 
+          love.graphics.rectangle("fill",pSprite.x+ (i-1)*2,pSprite.y+ (n)*2,2,2) 
         else
           love.graphics.setColor(0,0,0)
-          love.graphics.rectangle("fill",pSprite.x+ i*2,pSprite.y+ n*2,2,2) 
+          love.graphics.rectangle("fill",pSprite.x+ (i-1)*2,pSprite.y+ (n)*2,2,2) 
           love.graphics.setColor(255,255,255)
         end
       end
     else
       for i=#currentanim[n],1,-1 do
         if currentanim[n][i] == 1 then
-          love.graphics.rectangle("fill",pSprite.x+ (#currentanim[n]-i*2),pSprite.y+ n*2,2,2) 
+          love.graphics.rectangle("fill",pSprite.x+ (#currentanim[n]*2-(i)*2),pSprite.y+ (n)*2,2,2) 
         else
           love.graphics.setColor(0,0,0)
-          love.graphics.rectangle("fill",pSprite.x+ (#currentanim[n]-i*2),pSprite.y+ n*2,2,2) 
+          love.graphics.rectangle("fill",pSprite.x+ (#currentanim[n]*2-(i)*2),pSprite.y+ (n)*2,2,2) 
           love.graphics.setColor(255,255,255)
         end
       end
