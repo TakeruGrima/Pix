@@ -33,8 +33,8 @@ function CollideLeft(pSprite)
 end
 
 function CollideBelow(pSprite)
-  local id1 = getTileAt(pSprite.x + 1, pSprite.y + TILESIZE +16)
-  local id2 = getTileAt(pSprite.x + TILESIZE - 2, pSprite.y + TILESIZE +16)
+  local id1 = getTileAt(pSprite.x + 1, pSprite.y + TILESIZE +pSprite.h-TILESIZE)
+  local id2 = getTileAt(pSprite.x + TILESIZE - 2, pSprite.y + TILESIZE +pSprite.h-TILESIZE)
   if isSolid(id1) or isSolid(id2) then return true end
   return false
 end

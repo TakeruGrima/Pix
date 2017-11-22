@@ -122,7 +122,7 @@ pixela.life = 5
 --fonction d'initialisation
 function pixela:init(width,height)
 
-  self.sprite = CreateSprite("player",0,13*16-24,28,32)
+  self.sprite = CreateSprite("player",0,13*16-24,28,48)
   self.sprite.AddAnimation("idle", {self.graph[0]})
   self.sprite.AddAnimation("saut", {self.graph[0]})
   self.sprite.AddAnimation("move", {self.graph[0],self.graph[1],self.graph[2],self.graph[3],

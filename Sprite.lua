@@ -94,7 +94,7 @@ function updateSprite(pSprite, dt)
       pSprite.standing = true
       pSprite.vy = 0
       local lig = math.floor((pSprite.y + TILESIZE/2) / TILESIZE) + 1
-      pSprite.y = (lig-1)*TILESIZE -16
+      pSprite.y = (lig-1)*TILESIZE - (pSprite.h-TILESIZE)
     else
       pSprite.standing = false
     end
