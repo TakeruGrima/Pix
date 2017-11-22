@@ -2,6 +2,7 @@ require("map")
 require("Colision")
 require("Sprite")
 require("Player")
+require("life")
 
 io.stdout:setvbuf('no')
 --if arg[#arg] == "-debug" then require("mobdebug").start() end
@@ -51,7 +52,7 @@ end
 function love.load()
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
-  love.window.setTitle("Mini platformer (c) Gamecodeur 2017")
+  love.window.setTitle("Pix")
   pixela:init(largeur,hauteur)
   InitGame(1)
 end
@@ -63,4 +64,5 @@ end
 function love.draw()
   Mapdraw()
   pixela:draw()
+  drawLife()
 end  

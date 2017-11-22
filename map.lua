@@ -32,6 +32,15 @@ function getTileAt(pX, pY)
   return 0
 end
 
+function getCol(pX)
+  return math.floor(pX / TILESIZE) +1
+  end
+
+
+function getLig(pY)
+  return math.floor(pY / TILESIZE) +1
+  end
+
 function isSolid(pID)
   if pID == "0" then return false end
   if pID == "1" then return true end

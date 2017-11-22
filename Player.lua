@@ -117,6 +117,8 @@ pixela.graph[3] = {
 pixela.bJumpReady = true
 pixela.jumpVelocity = -380
 
+pixela.life = 5
+
 --fonction d'initialisation
 function pixela:init(width,height)
 
