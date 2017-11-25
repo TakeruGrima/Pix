@@ -1,5 +1,5 @@
 require("map")
-lstSprites = {}
+local lstSprites = {}
 
 -- Globals
 local bJumpReady
@@ -20,7 +20,7 @@ function CreateSprite(pType, pX, pY,width,height)
 
   mySprite.currentAnimation = ""
   mySprite.frame = 0
-  mySprite.animationSpeed = 1/8
+  mySprite.animationSpeed = 1/10
   mySprite.animationTimer = mySprite.animationSpeed
   mySprite.animations = {}
 
@@ -34,7 +34,9 @@ function CreateSprite(pType, pX, pY,width,height)
       mySprite.frame = 1
     end
   end
-
+  
+  table.insert(lstSprites,mySprite)
+  
   return mySprite
 end
 
@@ -112,7 +114,7 @@ function drawSprite(pSprite)
   for n=1,#currentanim do
     if pSprite.flip == false then
       for i=1,#currentanim[n] do
-        if currentanim[n][i] == 1 then
+        if string.sub(currentanim[n],i,i) == "1" then
           love.graphics.rectangle("fill",pSprite.x+ (i-1)*2,pSprite.y+ (n)*2,2,2) 
         else
           love.graphics.setColor(0,0,0)
@@ -122,7 +124,7 @@ function drawSprite(pSprite)
       end
     else
       for i=#currentanim[n],1,-1 do
-        if currentanim[n][i] == 1 then
+        if string.sub(currentanim[n],i,i) == "1" then
           love.graphics.rectangle("fill",pSprite.x+ (#currentanim[n]*2-(i)*2),pSprite.y+ (n)*2,2,2) 
         else
           love.graphics.setColor(0,0,0)
@@ -131,5 +133,12 @@ function drawSprite(pSprite)
         end
       end
     end
+  end
+end
+
+function drawAllSprites()
+  for nSprite=#lstSprites,1,-1 do
+    local sprite = lstSprites[nSprite]
+    drawSprite(sprite)
   end
 end

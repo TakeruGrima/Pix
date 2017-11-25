@@ -1,4 +1,5 @@
 require("sprite")
+require("map")
 --object pixela
 local pixela = {}
 --variables
@@ -119,14 +120,26 @@ pixela.jumpVelocity = -380
 
 pixela.life = 5
 
+newgraph = {}
 --fonction d'initialisation
 function pixela:init(width,height)
 
-  self.sprite = CreateSprite("player",0,13*16-24,28,48)
-  self.sprite.AddAnimation("idle", {self.graph[0]})
-  self.sprite.AddAnimation("saut", {self.graph[0]})
-  self.sprite.AddAnimation("move", {self.graph[0],self.graph[1],self.graph[2],self.graph[3],
-      self.graph[2],self.graph[1],self.graph[0]})
+  id = 0
+  for line in love.filesystem.lines("SpritesTabs/player.txt") do 
+    if string.sub(line,1,1)=="$" then
+      id = id+1
+      newgraph[id] = {}
+    else
+      newgraph[id][#newgraph[id] + 1] = line
+    end
+  end
+  
+  self.sprite = CreateSprite("player",0,17*TILESIZE - (#newgraph[1][1])*2,(#newgraph[1][1])*2,#newgraph[1]*2)
+  self.sprite.AddAnimation("idle", {newgraph[1]})
+  self.sprite.AddAnimation("saut", {newgraph[8]})
+  self.sprite.AddAnimation("postjump", {newgraph[7]})
+  self.sprite.AddAnimation("move", {newgraph[1],newgraph[3],newgraph[4],newgraph[5],
+    newgraph[4],newgraph[3],newgraph[1]})
   self.sprite.PlayAnimation("idle")
 end
 
@@ -139,7 +152,7 @@ end
 function pixela:update(dt)
   -- Locals for Physics
   local accel = 500
-  local friction = 150
+  local friction = 280
   local maxSpeed = 150
   local jumpVelocity = -280
 
@@ -160,7 +173,7 @@ function pixela:update(dt)
   if love.keyboard.isDown("right") then
     self.sprite.vx = self.sprite.vx + accel*dt
     if self.sprite.vx > maxSpeed then self.sprite.vx = maxSpeed end
-      newAnimation = "move"
+    newAnimation = "move"
     self.sprite.flip = false
   end
   if love.keyboard.isDown("left") then
@@ -173,6 +186,9 @@ function pixela:update(dt)
     self.sprite.vy = self.jumpVelocity
     self.sprite.standing = false
     self.bJumpReady = false
+    newAnimation = "postjump"
+  end
+  if self.sprite.standing == false then
     newAnimation = "saut"
   end
   self.sprite.PlayAnimation(newAnimation)

@@ -3,6 +3,7 @@ require("Colision")
 require("Sprite")
 require("Player")
 require("life")
+require("Npc")
 
 io.stdout:setvbuf('no')
 --if arg[#arg] == "-debug" then require("mobdebug").start() end
@@ -45,13 +46,13 @@ end
 function InitGame(pNiveau)
   lstSprites = {}
   ChargeNiveau(pNiveau)
-  --CreateSprite("player", (level.playerStart.col-1) * 32, (level.playerStart.lig-1) * 32)
   bJumpReady = true
 end
 
 function love.load()
   largeur = love.graphics.getWidth()
   hauteur = love.graphics.getHeight()
+  
   love.window.setTitle("Pix")
   pixela:init(largeur,hauteur)
   InitGame(1)
@@ -63,6 +64,6 @@ end
 
 function love.draw()
   Mapdraw()
-  pixela:draw()
+  drawAllSprites()
   drawLife()
 end  
